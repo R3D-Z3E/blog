@@ -1,0 +1,26 @@
+{{ define "main" }}
+<article class="post-single">
+    <div class="container-narrow">
+        <header class="post-header">
+            <div class="post-meta">
+                <span class="category">{{ index .Params.categories 0 | default "Uncategorized" }}</span>
+                <span class="date">{{ .Date.Format "January 2, 2006" }}</span>
+                <span class="reading-time">{{ .ReadingTime }} min read</span>
+            </div>
+            <h1 class="post-title">{{ .Title }}</h1>
+        </header>
+        
+        <div class="post-content">
+            {{ .Content }}
+        </div>
+        
+        {{ if .Params.tags }}
+        <div class="post-tags">
+            {{ range .Params.tags }}
+            <a href="/tags/{{ . | urlize }}" class="tag">#{{ . }}</a>
+            {{ end }}
+        </div>
+        {{ end }}
+    </div>
+</article>
+{{ end }}

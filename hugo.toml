@@ -1,0 +1,52 @@
+baseURL = "https://blog.r3d-z3e.me/"
+languageCode = "en-us"
+title = "R3D_Z3E"
+theme = "r3d-theme"
+
+[pagination]
+  pagerSize = 8
+
+[outputs]
+  home = ["HTML", "JSON"]
+
+[params]
+  description = "Security insights, technical deep dives, and learning journeys from the frontlines of cybersecurity"
+  author = "R3D_Z3E"
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  
+  [[menu.main]]
+    name = "Search"
+    url = "/search/"
+    weight = 2
+  
+  [[menu.main]]
+    name = "Portfolio"
+    url = "https://r3d-z3e.me"
+    weight = 3
+  
+  [[menu.main]]
+    name = "Whoami"
+    url = "/whoami/"
+    weight = 4
+  
+  [[menu.main]]
+    name = "Tags"
+    url = "/tags/"
+    weight = 5
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = "monokai"
+

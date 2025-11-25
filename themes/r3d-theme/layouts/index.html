@@ -1,0 +1,88 @@
+{{ define "main" }}
+<section class="hero">
+    <div class="container">
+        <h1 class="hero-title">Security Blogs & Writeups</h1>
+        <p class="hero-subtitle">{{ .Site.Params.description }}</p>
+        
+        <div class="category-filters">
+            <button class="filter-btn active" data-category="all">All Posts</button>
+            <button class="filter-btn" data-category="security">Security</button>
+            <button class="filter-btn" data-category="api-security">API Security</button>
+            <button class="filter-btn" data-category="technology">Technology</button>
+            <button class="filter-btn" data-category="introduction">Introduction</button>
+        </div>
+    </div>
+</section>
+
+<section class="posts-grid">
+    <div class="container">
+        <div class="grid">
+            {{ range .Paginator.Pages }}
+            <article class="post-card" data-category="{{ range .Params.categories }}{{ . | urlize }} {{ end }}">
+                <div class="card-header">
+                    <span class="category-badge">{{ index .Params.categories 0 | default "Uncategorized" }}</span>
+                </div>
+                <h2 class="card-title">
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                </h2>
+                <p class="card-excerpt">
+                    {{ if .Params.description }}
+                        {{ .Params.description }}
+                    {{ else }}
+                        {{ .Summary | plainify | truncate 120 }}
+                    {{ end }}
+                </p>
+                <div class="card-meta">
+                    <span class="date">{{ .Date.Format "January 2, 2006" }}</span>
+                    <span class="reading-time">{{ .ReadingTime }} min read</span>
+                </div>
+                <a href="{{ .RelPermalink }}" class="read-more">Read Article →</a>
+            </article>
+            {{ end }}
+        </div>
+        
+        <!-- Pagination -->
+        {{ if gt .Paginator.TotalPages 1 }}
+        <nav class="pagination">
+            {{ if .Paginator.HasPrev }}
+            <a href="{{ .Paginator.Prev.URL }}" class="pagination-link prev">← Previous</a>
+            {{ end }}
+            
+            <div class="pagination-numbers">
+                {{ range .Paginator.Pagers }}
+                <a href="{{ .URL }}" class="pagination-number {{ if eq . $.Paginator }}active{{ end }}">
+                    {{ .PageNumber }}
+                </a>
+                {{ end }}
+            </div>
+            
+            {{ if .Paginator.HasNext }}
+            <a href="{{ .Paginator.Next.URL }}" class="pagination-link next">Next →</a>
+            {{ end }}
+        </nav>
+        {{ end }}
+    </div>
+</section>
+
+<script>
+const filterBtns = document.querySelectorAll('.filter-btn');
+const postCards = document.querySelectorAll('.post-card');
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const category = btn.dataset.category;
+        
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        postCards.forEach(card => {
+            if (category === 'all' || card.dataset.category.includes(category)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+{{ end }}

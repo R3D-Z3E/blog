@@ -1,0 +1,21 @@
+{{ define "main" }}
+<section class="tags-section">
+    <div class="container-narrow">
+        <h1 class="tags-title">All Tags</h1>
+        <p class="tags-subtitle">Browse articles by topic</p>
+        
+        {{ if .Site.Taxonomies.tags }}
+        <div class="tags-cloud">
+            {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
+            <a href="{{ "/tags/" | relLangURL }}{{ $name | urlize }}" class="tag-item">
+                <span class="tag-name">#{{ $name }}</span>
+                <span class="tag-count">{{ $taxonomy.Count }}</span>
+            </a>
+            {{ end }}
+        </div>
+        {{ else }}
+        <p class="no-tags">No tags found. Add tags to your posts!</p>
+        {{ end }}
+    </div>
+</section>
+{{ end }}

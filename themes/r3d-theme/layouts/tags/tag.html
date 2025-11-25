@@ -1,0 +1,41 @@
+{{ define "main" }}
+<section class="taxonomy-section">
+    <div class="container">
+        <div class="taxonomy-header">
+            <h1 class="taxonomy-title">
+                <span class="tag-symbol">#</span>{{ .Title }}
+            </h1>
+            <p class="taxonomy-count">{{ len .Pages }} article{{ if ne (len .Pages) 1 }}s{{ end }}</p>
+        </div>
+        
+        <div class="grid">
+            {{ range .Pages }}
+            <article class="post-card">
+                <div class="card-header">
+                    <span class="category-badge">{{ index .Params.categories 0 | default "Uncategorized" }}</span>
+                </div>
+                <h2 class="card-title">
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                </h2>
+                <p class="card-excerpt">
+                    {{ if .Params.description }}
+                        {{ .Params.description }}
+                    {{ else }}
+                        {{ .Summary | plainify | truncate 120 }}
+                    {{ end }}
+                </p>
+                <div class="card-meta">
+                    <span class="date">{{ .Date.Format "January 2, 2006" }}</span>
+                    <span class="reading-time">{{ .ReadingTime }} min read</span>
+                </div>
+                <a href="{{ .RelPermalink }}" class="read-more">Read Article →</a>
+            </article>
+            {{ end }}
+        </div>
+        
+        <div class="back-to-tags">
+            <a href="/tags/" class="back-link">← Back to all tags</a>
+        </div>
+    </div>
+</section>
+{{ end }}

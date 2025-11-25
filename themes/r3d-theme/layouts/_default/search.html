@@ -1,0 +1,19 @@
+{{ define "main" }}
+<section class="search-section">
+    <div class="container-narrow">
+        <h1 class="search-title">Search</h1>
+        <p class="search-subtitle">Find articles, writeups, and security insights</p>
+        
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search for posts, tags, or topics..." autocomplete="off">
+            <span class="search-icon">🔍</span>
+        </div>
+        
+        <div id="search-results"></div>
+        <div id="search-stats"></div>
+    </div>
+</section>
+
+<script src="/js/fuse.min.js"></script>
+<script src="/js/search.js"></script>
+{{ end }}
