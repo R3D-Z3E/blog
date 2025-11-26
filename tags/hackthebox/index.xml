@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>HackTheBox on R3D_Z3E</title>
-    <link>https://blog.r3d-z3e.me/tags/hackthebox/</link>
+    <link>http://localhost:1313/tags/hackthebox/</link>
     <description>Recent content in HackTheBox on R3D_Z3E</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 23 Nov 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://blog.r3d-z3e.me/tags/hackthebox/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/hackthebox/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>PYRAT</title>
-      <link>https://blog.r3d-z3e.me/posts/pyrat/</link>
+      <link>http://localhost:1313/posts/pyrat/</link>
       <pubDate>Sun, 23 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://blog.r3d-z3e.me/posts/pyrat/</guid>
+      <guid>http://localhost:1313/posts/pyrat/</guid>
       <description>&lt;p&gt;Test your enumeration skills on this boot-to-root machine.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Difficulty:&lt;/strong&gt; Easy&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Hint:&lt;/strong&gt; Py receives &amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;Full writeup content here&amp;hellip;&lt;/p&gt;</description>
     </item>
   </channel>
