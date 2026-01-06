@@ -747,3 +747,189 @@ body {
     border-color: var(--red);
     color: var(--red);
 }
+
+/* ========== MOBILE RESPONSIVE FIXES ========== */
+
+/* Mobile: Max width 768px */
+@media (max-width: 768px) {
+    /* Container padding for mobile */
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .container-narrow {
+        padding: 0 1rem;
+    }
+    
+    /* Header/Navigation */
+    .nav-wrapper {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .logo {
+        font-size: 1.2rem;
+    }
+    
+    .logo-icon-img {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .main-nav {
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        justify-content: center;
+    }
+    
+    .nav-link {
+        font-size: 0.9rem;
+    }
+    
+    /* Hero Section */
+    .hero {
+        padding: 2rem 0 1.5rem;
+    }
+    
+    .hero-title {
+        font-size: 1.8rem;
+        line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.95rem;
+        padding: 0 1rem;
+    }
+    
+    /* Category Filters */
+    .category-filters {
+        gap: 0.5rem;
+        padding: 0 0.5rem;
+    }
+    
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    /* Posts Grid - Single Column on Mobile */
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    /* Post Cards */
+    .post-card {
+        padding: 1.2rem;
+    }
+    
+    .card-title {
+        font-size: 1.2rem;
+    }
+    
+    .card-excerpt {
+        font-size: 0.9rem;
+    }
+    
+    .card-meta {
+        flex-direction: column;
+        gap: 0.3rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Footer */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .footer-section {
+        text-align: center;
+    }
+    
+    /* Search Page */
+    .search-title {
+        font-size: 1.8rem;
+    }
+    
+    #search-input {
+        font-size: 1rem;
+        padding: 0.9rem 1rem 0.9rem 2.8rem;
+    }
+    
+    .search-icon {
+        left: 1rem;
+        font-size: 1rem;
+    }
+    
+    /* Tags Page */
+    .tags-title {
+        font-size: 1.8rem;
+    }
+    
+    .tags-cloud {
+        gap: 0.6rem;
+        padding: 0 0.5rem;
+    }
+    
+    .tag-item {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Single Post Page */
+    .post-title {
+        font-size: 1.8rem;
+    }
+    
+    .post-content {
+        font-size: 1rem;
+    }
+    
+    .post-content h2 {
+        font-size: 1.4rem;
+    }
+    
+    .post-content h3 {
+        font-size: 1.2rem;
+    }
+    
+    /* Pagination */
+    .pagination {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .pagination-numbers {
+        flex-wrap: wrap;
+    }
+    
+    .pagination-number {
+        min-width: 40px;
+        padding: 0.6rem 0.8rem;
+    }
+}
+
+/* Extra small devices (phones in portrait, less than 480px) */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.5rem;
+    }
+    
+    .category-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-btn {
+        width: 100%;
+    }
+    
+    .post-card {
+        padding: 1rem;
+    }
+    
+    .card-title {
+        font-size: 1.1rem;
+    }
+}

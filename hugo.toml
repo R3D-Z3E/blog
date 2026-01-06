@@ -3,6 +3,9 @@ languageCode = "en-us"
 title = "R3D_Z3E"
 theme = "r3d-theme"
 
+# Disable all RSS feeds
+disableKinds = ["RSS"]
+
 [pagination]
   pagerSize = 8
 
