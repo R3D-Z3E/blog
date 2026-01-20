@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cracking VulnBank Authentication (SQL Injection, Weak JWTs and Broken Authorization) | R3D_Z3E</title>
+<meta name="description" content="Security insights, technical deep dives, and learning journeys from the frontlines of cybersecurity">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+</head>
+<body>
+    <header class="site-header">
+    <div class="container">
+        <div class="nav-wrapper">
+            <a href="/" class="logo">
+                <img src="/images/logo.png" alt="R3D_Z3E Logo" class="logo-icon-img">
+                <span class="logo-text">R3D_Z3E</span>
+            </a>
+            <nav class="main-nav">
+                
+                <a href="/" class="nav-link">Home</a>
+                
+                <a href="/search/" class="nav-link">Search</a>
+                
+                <a href="https://r3d-z3e.me" class="nav-link">Portfolio</a>
+                
+                <a href="/whoami/" class="nav-link">Whoami</a>
+                
+                <a href="/tags/" class="nav-link">Tags</a>
+                
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <main>
+        
+<article class="post-single">
+    <div class="container-narrow">
+        <header class="post-header">
+            <div class="post-meta">
+                <span class="category">Security</span>
+                <span class="date">January 20, 2026</span>
+                <span class="reading-time">7 min read</span>
+            </div>
+            <h1 class="post-title">Cracking VulnBank Authentication (SQL Injection, Weak JWTs and Broken Authorization)</h1>
+        </header>
+        
+        <div class="post-content">
+            <p><img src="https://i.imgur.com/vSby9hs.png" alt=""></p>
+<p>This first part of the series dives into how VulnBank’s login and access‑control layers can be completely subverted through a mix of SQL injection, weak JSON Web Token handling and broken authorization checks. Starting from the public login page, it shows how poorly written queries allow attackers to bypass authentication, how insecure JWT signing and storage make tokens easy to forge or replay, and how missing server‑side validation turns “secure” sessions into a fiction.</p>
+<h2 id="sql-injection-in-login-page">SQL Injection in Login Page</h2>
+<p>Without saying too much, I would just setup my burp suite and foxy proxy to intercept traffic and test if it is vulnerable to SQL injection</p>
+<p>First thing I would do is to register a user since I do not have any previous username that I could try SQL injection on</p>
+<p><img src="https://i.imgur.com/mzC0SVf.png" alt=""></p>
+<p>now that we have a registered user, let us try to bypass authentication and gain access to the account without the password</p>
+<p><img src="https://i.imgur.com/HOFboIO.png" alt=""></p>
+<p>As seen above, we have captured the request and what is left is to send to repeater to test for SQLi</p>
+<p><img src="https://i.imgur.com/pLPU1An.png" alt=""></p>
+<p>As seen above, with the help of a simple <code>' OR '1'='1</code> payload, we were able to bypass authentication for the userrr</p>
+<p>Let us go a step further and try to bypass the authentication for the admin user to see if we can get access to an account with elevated privileges</p>
+<p><img src="https://i.imgur.com/pGg4OIJ.png" alt=""></p>
+<p>Voila, we have successfully compromised admin account via authentication bypass with SQLi payload.</p>
+<p><strong>REMEDIATION</strong>: - Implement <strong>parameterized queries (prepared statements)</strong> for all database interactions to ensure user input is never executed as code.</p>
+<h2 id="weak-jwt-implentation">Weak JWT Implentation</h2>
+<p>In this section, we would be trying to test if there is weak implementation in the Json Web Token (JWT)</p>
+<p>As usual, I captured the request again so I can have the token as seen below</p>
+<p><img src="https://i.imgur.com/jB3ZRPH.png" alt=""></p>
+<p>In testing for weak JWT implementation, my go to tool has always been <a href="https://xjwt.io/">xjwt</a></p>
+<p><img src="https://i.imgur.com/NBUNRKf.png" alt=""></p>
+<p>From the screenshot above, we can see that there is a whole lot of things wrong with the JWT token</p>
+<p><img src="https://i.imgur.com/Q1e4pwB.png" alt=""></p>
+<p><img src="https://i.imgur.com/JmUZe6Y.png" alt=""></p>
+<p>The main issues found by the scanner are listed below:</p>
+<ul>
+<li><input disabled="" type="checkbox"> VulnBank’s JWTs use a weak HMAC secret (<code>secret123</code>), allowing attackers to forge arbitrary tokens that the server will accept as valid.</li>
+<li><input disabled="" type="checkbox"> The tokens lack an <code>exp</code> claim, so they never expire and can be replayed indefinitely once stolen or forged.</li>
+<li><input disabled="" type="checkbox"> Symmetric HMAC signing with a shared secret means that compromising any one service or environment exposes all JWT‑protected services that trust the same key.</li>
+<li><input disabled="" type="checkbox"> The absence of an <code>aud</code> claim allows the same JWT to be reused by unintended consumers, enabling cross‑service token replay.</li>
+<li><input disabled="" type="checkbox"> Without an <code>iss</code> claim, the application cannot reliably verify which issuer created a token, weakening both trust and auditability of JWTs.​</li>
+</ul>
+<p>Since we have identified that they are critical issues, I would try to elevate the privilege of the user (r3d_z3e) to an admin user</p>
+<p><img src="https://i.imgur.com/eQyj902.png" alt=""></p>
+<p>As seen, the user is just a normal user with low privilege.</p>
+<p>The next step is getting the jwt token (there are many ways to do this either by intercepting traffic or by using dev tools but I am going to be making use of the dev tools)</p>
+<p><img src="https://i.imgur.com/OfEYooE.png" alt=""></p>
+<p>Now this token is what we are going to editing to elevate privileges</p>
+<p>The first thing to do is to get the secret key as seen below</p>
+<p><img src="https://i.imgur.com/8M5Iruy.png" alt=""></p>
+<p>as this done, we can now regenerate another JWT to elevate privileges</p>
+<p><img src="https://i.imgur.com/QradDBV.png" alt=""></p>
+<p>Now that we have the generated token, we shall be replacing it with the former and refreshing the page to elevate the privilege the user</p>
+<p><img src="https://i.imgur.com/gTFdvTX.png" alt=""></p>
+<p>As seen from the screenshot above, the user (r3d_z3e) now has admin privileges and features that a normal user would not be able to access normally</p>
+<p><strong>REMEDIATION</strong>: Strengthen security by using a <strong>cryptographically strong secret (HS256)</strong> or asymmetric keys (RS256) and enforcing <strong>expiration (<code>exp</code>) and audience (<code>aud</code>) claims</strong>.</p>
+<h2 id="broken-object-level-authorization-bola">Broken object level authorization (BOLA)</h2>
+<p>In testing for this vulnerability, we shall be creating 2 account for this</p>
+<p><img src="https://i.imgur.com/U38P4Dp.png" alt=""></p>
+<p><img src="https://i.imgur.com/PqAwwKw.png" alt=""></p>
+<p>Now that we have both account created, we would be transferring accounts to each of the account in order to have a transaction history and have an id parameter to test</p>
+<p>The next step is to login into user A (r3d_z3e) and initiate transfer to user B(# Feranmiiiiiiiiiiii) and also vice versa (as seen below)</p>
+<p><img src="https://i.imgur.com/gWxQmBn.png" alt=""></p>
+<p><img src="https://i.imgur.com/OgL1PQi.png" alt=""></p>
+<p>Now that we have transactions history, what we are going to be testing next is trying to access transaction history of another user while authenticated as a different user i.e while being authenticated as User A can we access the transaction history of user B</p>
+<p>Now we are going to be intercepting the transactions endpoint and moving from there</p>
+<p><img src="https://i.imgur.com/3IyBJNq.png" alt=""></p>
+<p>As seen above I have gotten the transaction history for the user I am logged into, the next thing I would be trying is to see the transaction history of the user that I have sent money to or I received money from in my transaction history since account number is what is needed to access the transaction history.</p>
+<p><img src="https://i.imgur.com/BzgNq8g.png" alt=""></p>
+<p>Lo and behold, we could get the whole transaction history of another user while not being authenticated to that user</p>
+<p>What this just shows us is that the API failed to enforce object-level authorization. It trusted that any user who sends a valid token could access any account’s transactions, as long as they knew the account ID.</p>
+<p><strong>REMEDIATION</strong>: Enforce <strong>server-side ownership validation</strong> to ensure the authenticated user has explicit permission to access the specific account ID requested.</p>
+<h2 id="broken-object-property-level-authorization-bopla">Broken object property level authorization (BOPLA)</h2>
+<p><strong>Broken Object Property Level Authorization (BOPLA)</strong> is an API security vulnerability where insufficient authorization checks allow unauthorized users to view or modify specific properties within a data object such as changing their role to &ldquo;admin&rdquo; even if they should not have the permission to do so.</p>
+<p><strong>Broken Object Property Level Authorization (BOPLA)</strong> is a single vulnerability that combines <strong>two flaws</strong>:</p>
+<ol>
+<li><strong>Mass Assignment</strong> – letting users modify sensitive properties (like <code>isAdmin</code>) they shouldn’t be allowed to change.</li>
+<li><strong>Excessive Data Exposure</strong> – returning more data than needed, including private fields (like roles) in API responses.</li>
+</ol>
+<p>Together, these create BOPLA: attackers first <strong>see</strong> hidden properties (due to poor filtering), then <strong>abuse</strong> them (via unsafe input binding), leading to privilege escalation or data leaks.</p>
+<p><img src="https://i.imgur.com/suXvIAh.png" alt=""></p>
+<p>From the above screenshot, it can be seen that after logging in that there is a case of excessive data exposure (roles) which helps us in our mass assignment</p>
+<p>the next thing we would be attempting now is intercepting the traffic while trying to create a new user and use the parameter <code>is_admin&quot;: true</code> to escalate privileges</p>
+<p><img src="https://i.imgur.com/dVXFNiN.png" alt=""></p>
+<p>As seen above, we have been able to abuse the mass assignment vuln to escalate privileges, let us go ahead to login to see if what we have there has elevated privileges</p>
+<p><img src="https://i.imgur.com/a0uQxSj.png" alt=""></p>
+<p>As seen above, we have successfully exploited the BOPLA vuln to register BGS as an admin</p>
+<p><strong>REMEDIATION</strong>: Apply <strong>strict input allow-listing</strong> to prevent unauthorized modification of sensitive properties like user roles and administrative flags.</p>
+<h2 id="weak-password-reset-mechanism">Weak Password Reset Mechanism</h2>
+<p>VulnBank&rsquo;s password reset uses a simple 4-digit PIN (basically 10,000 guesses max) with no rate limiting or expiration, meaning anyone can request a reset for any account and just keep trying codes until one works. For a banking app where a successful guess means full access to someone&rsquo;s money and transaction history, relying on a PIN you could brute-force over lunch is a recipe for disaster.</p>
+<p><img src="https://i.imgur.com/zQ7lmPm.png" alt=""></p>
+<p>The first thing to do is to reset the pin as seen above, and intercept request</p>
+<p><img src="https://i.imgur.com/D2JiuME.png" alt=""></p>
+<p>I would be sending this request to intruder afterwards to bruteforce the pin with a custom wordlist (0000-9999) that I created</p>
+<p><img src="https://i.imgur.com/AKMgUbj.png" alt=""></p>
+<p>First thing first, insert a payload marker in the pin part since that is what we are really interested in as seen below</p>
+<p><img src="https://i.imgur.com/0w3aHFt.png" alt=""></p>
+<p>Afterwards we chose our payload</p>
+<p><img src="https://i.imgur.com/D5L4t0X.png" alt=""></p>
+<p><img src="https://i.imgur.com/t2plPNo.png" alt=""></p>
+<p>After the payload is chosen, all is left is to start attack</p>
+<p><img src="https://i.imgur.com/KF3cwrQ.png" alt=""></p>
+<p>And due to rate limiting not implemented, we finally got to bruteforce in few minutes and we got our password reset in few minutes as seen below</p>
+<p><img src="https://i.imgur.com/l0XexyP.png" alt=""></p>
+<p>Now let us try to login with the new password to see what we have thereee</p>
+<p><img src="https://i.imgur.com/nErI4aj.png" alt=""></p>
+<p>And there we could see that the attack was successful</p>
+<p><strong>REMEDIATION</strong>: Secure the reset process by implementing <strong>strict rate limiting</strong> on PIN attempts and replacing 4-digit codes with long, <strong>high-entropy alphanumeric tokens</strong>.</p>
+
+        </div>
+        
+        
+    </div>
+</article>
+
+    </main>
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section footer-brand">
+                <h3 class="footer-title">R3D_Z3E</h3>
+                <p class="footer-desc">Breaking systems, building knowledge.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-heading">NAVIGATION</h4>
+                <ul class="footer-links">
+                    <li><a href="/">Blog</a></li>
+                    <li><a href="/whoami/">About Me</a></li>
+                    <li><a href="/tags/">Topics</a></li>
+                    <li><a href="/search/">Search</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-heading">SOCIAL</h4>
+                <ul class="footer-links">
+                    <li><a href="https://twitter.com/efagbule" target="_blank">𝕏 Twitter</a></li>
+                    <li><a href="https://github.com/r3d-z3e" target="_blank">⚙ GitHub</a></li>
+                    <li><a href="https://linkedin.com/in/ezekielfagbule" target="_blank">💼 LinkedIn</a></li>
+                    <li><a href="mailto:fagbuleolakunle223@gmail.com">☕ Buy Me a Coffee</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
